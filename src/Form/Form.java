@@ -1,0 +1,1492 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Form;
+
+import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import model.UserPass;
+import db.ConnectionManager;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import model.Daging;
+import model.Transaksi;
+import java.awt.Image;
+
+/**
+ *
+ * @author MahzuzH
+ */
+public class Form extends javax.swing.JFrame {
+
+    public Connection con;
+    public Statement stat;
+    public ResultSet rs;
+    private String sql;
+    private int harga;
+    private int price;
+    public
+    UserPass login = new UserPass();
+    Daging daging = new Daging();
+    Transaksi trans = new Transaksi();
+
+    /**
+     * Creates new form FormLogin
+     */
+
+
+    public void tampilUser() {
+        DefaultTableModel tb_model = new DefaultTableModel();
+        tb_model.addColumn("No Akun");
+        tb_model.addColumn("Username");
+        tb_model.addColumn("Password");
+        tb_model.addColumn("Role");
+
+        ResultSet rs = null;
+        rs = login.readUserpass();
+
+        try {
+            while (rs.next()) {
+                tb_model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
+            }
+            tabel_user.setModel(tb_model);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void tampilDaging() {
+        DefaultTableModel tb_model = new DefaultTableModel();
+        tb_model.addColumn("Kode Daging");
+        tb_model.addColumn("Bagian Daging");
+        tb_model.addColumn("Grade");
+        tb_model.addColumn("Stok");
+        tb_model.addColumn("Harga");
+
+        ResultSet rs = null;
+        rs = daging.readDaging();
+
+        try {
+            while (rs.next()) {
+                tb_model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)});
+            }
+            tabel_daging.setModel(tb_model);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void tampilTrans() {
+        DefaultTableModel tb_model = new DefaultTableModel();
+        tb_model.addColumn("ID Transaksi");
+        tb_model.addColumn("Username");
+        tb_model.addColumn("Kode Daging");
+        tb_model.addColumn("Tingkat Kematangan");
+        tb_model.addColumn("Harga");
+        tb_model.addColumn("Stok");
+        tb_model.addColumn("Total");
+
+        ResultSet rs = null;
+        rs = trans.readTrans();
+
+        try {
+            while (rs.next()) {
+                tb_model.addRow(new Object[]{rs.getString(1), rs.getString(2),
+                    rs.getString(3), rs.getString(4), rs.getString(5), 
+                    rs.getString(6), rs.getString(7)});
+            }
+            tabel_trans.setModel(tb_model);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void clear(){
+        edt_user_login.setText("");
+        edt_pass_login.setText("");
+        edt_user.setText("");
+        edt_bagian_daging.setText("");
+        edt_grade.setText("");
+        edt_harga.setText("");
+        edt_harga_daging.setText("");
+        edt_harga_trans.setText("");
+        edt_id.setText("");
+        edt_jumlah.setText("");
+        edt_kode.setText("");
+        edt_kode_daging.setText("");
+        edt_kode_pelanggan.setText("");
+        edt_matang.setText("");
+        edt_noakun.setText("");
+        edt_pass.setText("");
+        edt_pass_regis.setText("");
+        edt_qty.setText("");
+        edt_role.setText("");
+        edt_stock_daging.setText("");
+        edt_total.setText("");
+        edt_user_regis.setText("");
+        edt_user_trans.setText("");
+        img_ribeye.setVisible(false);
+        img_sirloin.setVisible(false);
+        img_tenderloin.setVisible(false);
+        img_tomahawk.setVisible(false);
+    }
+
+    public Form(){
+        try{
+            initComponents();
+            tampilUser();
+            tampilDaging();
+            tampilTrans();
+            cl = (CardLayout) jPanel1.getLayout();
+            
+            ConnectionManager conman = new ConnectionManager();
+            conman.logOn();
+            con = conman.con;
+            stat = conman.stm;
+
+            img_ribeye.setVisible(false);
+            img_sirloin.setVisible(false);
+            img_tenderloin.setVisible(false);
+            img_tomahawk.setVisible(false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        FormAwal = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        edt_user_login = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        edt_pass_login = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        FormRegister = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        edt_user_regis = new javax.swing.JTextField();
+        edt_pass_regis = new javax.swing.JTextField();
+        rb_admin = new javax.swing.JRadioButton();
+        rb_pelanggan = new javax.swing.JRadioButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        FormAdmin = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        FormTabelTransaksi = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabel_trans = new javax.swing.JTable();
+        edt_id = new javax.swing.JTextField();
+        edt_user_trans = new javax.swing.JTextField();
+        edt_matang = new javax.swing.JTextField();
+        edt_kode = new javax.swing.JTextField();
+        edt_harga_trans = new javax.swing.JTextField();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        edt_total = new javax.swing.JTextField();
+        jLabel40 = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        edt_jumlah = new javax.swing.JTextField();
+        jLabel37 = new javax.swing.JLabel();
+        FormTabelUser = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabel_user = new javax.swing.JTable();
+        edt_noakun = new javax.swing.JTextField();
+        edt_user = new javax.swing.JTextField();
+        edt_role = new javax.swing.JTextField();
+        edt_pass = new javax.swing.JTextField();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jLabel26 = new javax.swing.JLabel();
+        FormTabelDaging = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabel_daging = new javax.swing.JTable();
+        edt_kode_daging = new javax.swing.JTextField();
+        edt_bagian_daging = new javax.swing.JTextField();
+        edt_harga_daging = new javax.swing.JTextField();
+        edt_grade = new javax.swing.JTextField();
+        edt_stock_daging = new javax.swing.JTextField();
+        jButton16 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
+        jLabel46 = new javax.swing.JLabel();
+        FormPelanggan = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        edt_username = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        cbb_bagian = new javax.swing.JComboBox<>();
+        cbb_kematangan = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        edt_harga = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        edt_qty = new javax.swing.JTextField();
+        btn_cekharga = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        img_tomahawk = new javax.swing.JLabel();
+        img_tenderloin = new javax.swing.JLabel();
+        img_sirloin = new javax.swing.JLabel();
+        img_ribeye = new javax.swing.JLabel();
+        cbb_grade = new javax.swing.JComboBox<>();
+        edt_kode_pelanggan = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(new java.awt.CardLayout());
+
+        FormAwal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Password");
+        FormAwal.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 100, -1));
+
+        jLabel3.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Username");
+        FormAwal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 100, -1));
+
+        edt_user_login.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormAwal.add(edt_user_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 260, -1));
+
+        jButton1.setText("Keluar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        FormAwal.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 380, 110, -1));
+
+        jButton2.setText("Login");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        FormAwal.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, 110, -1));
+        FormAwal.add(edt_pass_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 260, -1));
+
+        jLabel4.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Create New Account");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        FormAwal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 190, -1));
+
+        jCheckBox1.setBackground(new java.awt.Color(0, 0, 0));
+        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setText("Tampilkan Password");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        FormAwal.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, -1, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Untitled design (29).png"))); // NOI18N
+        FormAwal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 690));
+
+        jPanel1.add(FormAwal, "card2");
+
+        FormRegister.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Futura Bk BT", 1, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Registrasi");
+        FormRegister.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Username");
+        FormRegister.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Password");
+        FormRegister.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, -1, -1));
+
+        edt_user_regis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormRegister.add(edt_user_regis, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 280, -1));
+
+        edt_pass_regis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormRegister.add(edt_pass_regis, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, 280, -1));
+
+        rb_admin.setBackground(new java.awt.Color(0, 0, 0));
+        rb_admin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        rb_admin.setForeground(new java.awt.Color(255, 255, 255));
+        rb_admin.setText("Admin");
+        rb_admin.setToolTipText("");
+        rb_admin.setName(""); // NOI18N
+        FormRegister.add(rb_admin, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, -1, -1));
+
+        rb_pelanggan.setBackground(new java.awt.Color(0, 0, 0));
+        rb_pelanggan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        rb_pelanggan.setForeground(new java.awt.Color(255, 255, 255));
+        rb_pelanggan.setText("Pelanggan");
+        FormRegister.add(rb_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 450, -1, -1));
+
+        jButton3.setText("Keluar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        FormRegister.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 540, 110, -1));
+
+        jButton4.setText("Register");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        FormRegister.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 540, 110, -1));
+
+        jLabel8.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Role");
+        FormRegister.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, -1, -1));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Untitled design (30).png"))); // NOI18N
+        FormRegister.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.add(FormRegister, "card3");
+
+        FormAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("User");
+        FormAdmin.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/usericon.png"))); // NOI18N
+        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel20MouseClicked(evt);
+            }
+        });
+        FormAdmin.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, -1));
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/transaction.png"))); // NOI18N
+        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel22MouseClicked(evt);
+            }
+        });
+        FormAdmin.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, -1, -1));
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("Transaksi");
+        FormAdmin.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, -1, -1));
+
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/stokstek.png"))); // NOI18N
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
+        FormAdmin.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, -1, -1));
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("Stok");
+        FormAdmin.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, -1, -1));
+
+        jButton7.setText("Kembali");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        FormAdmin.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, 120, -1));
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Untitled design (30).png"))); // NOI18N
+        FormAdmin.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.add(FormAdmin, "card5");
+
+        FormTabelTransaksi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("ID Transaksi :");
+        FormTabelTransaksi.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setText("Username :");
+        FormTabelTransaksi.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setText("Kode Daging :");
+        FormTabelTransaksi.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, -1, -1));
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel36.setText("Jumlah :");
+        FormTabelTransaksi.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, -1));
+
+        tabel_trans.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabel_trans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_transMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabel_trans);
+
+        FormTabelTransaksi.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, 100));
+
+        edt_id.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelTransaksi.add(edt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 220, -1));
+
+        edt_user_trans.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelTransaksi.add(edt_user_trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 220, -1));
+
+        edt_matang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelTransaksi.add(edt_matang, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 220, -1));
+
+        edt_kode.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelTransaksi.add(edt_kode, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 220, -1));
+
+        edt_harga_trans.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelTransaksi.add(edt_harga_trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 220, -1));
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel38.setText("Tingkat Kematangan :");
+        FormTabelTransaksi.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, -1, -1));
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel39.setText("Total :");
+        FormTabelTransaksi.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 540, -1, -1));
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setText("Tabel Transaksi");
+        FormTabelTransaksi.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, -1, -1));
+
+        edt_total.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edt_total.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edt_totalActionPerformed(evt);
+            }
+        });
+        FormTabelTransaksi.add(edt_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 220, -1));
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setText("Harga :");
+        FormTabelTransaksi.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, -1, -1));
+
+        jButton12.setText("Tambah");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        FormTabelTransaksi.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 590, 80, -1));
+
+        jButton13.setText("Ubah");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        FormTabelTransaksi.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 80, -1));
+
+        jButton14.setText("Kembali");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        FormTabelTransaksi.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 640, 130, -1));
+
+        jButton15.setText("Hapus");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        FormTabelTransaksi.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 590, 80, -1));
+
+        edt_jumlah.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edt_jumlah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edt_jumlahActionPerformed(evt);
+            }
+        });
+        FormTabelTransaksi.add(edt_jumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 510, 220, -1));
+
+        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Untitled design (30).png"))); // NOI18N
+        FormTabelTransaksi.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.add(FormTabelTransaksi, "card7");
+
+        FormTabelUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Tabel User");
+        FormTabelUser.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, -1, -1));
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("No Akun :");
+        FormTabelUser.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 410, -1, -1));
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("Username :");
+        FormTabelUser.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, -1, -1));
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("Password :");
+        FormTabelUser.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 490, -1, -1));
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setText("Role :");
+        FormTabelUser.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 530, -1, -1));
+
+        tabel_user.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabel_user.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_userMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabel_user);
+
+        FormTabelUser.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, 100));
+
+        edt_noakun.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelUser.add(edt_noakun, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, 220, -1));
+
+        edt_user.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelUser.add(edt_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 220, -1));
+
+        edt_role.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelUser.add(edt_role, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 530, 220, -1));
+
+        edt_pass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelUser.add(edt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, 220, -1));
+
+        jButton8.setText("Tambah");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        FormTabelUser.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 590, 80, -1));
+
+        jButton9.setText("Ubah");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        FormTabelUser.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 80, -1));
+
+        jButton10.setText("Kembali");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        FormTabelUser.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 640, 130, -1));
+
+        jButton11.setText("Hapus");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        FormTabelUser.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 590, 80, -1));
+
+        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Untitled design (30).png"))); // NOI18N
+        FormTabelUser.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.add(FormTabelUser, "card6");
+
+        FormTabelDaging.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel41.setText("Tabel Daging");
+        FormTabelDaging.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, -1, -1));
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel42.setText("Kode Daging :");
+        FormTabelDaging.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, -1, -1));
+
+        jLabel43.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel43.setText("Bagian :");
+        FormTabelDaging.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, -1, -1));
+
+        jLabel44.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel44.setText("Grade :");
+        FormTabelDaging.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
+
+        jLabel45.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel45.setText("Harga :");
+        FormTabelDaging.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 550, -1, -1));
+
+        jLabel47.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel47.setText("Stock :");
+        FormTabelDaging.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 510, -1, -1));
+
+        tabel_daging.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabel_daging.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_dagingMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tabel_daging);
+
+        FormTabelDaging.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, 100));
+
+        edt_kode_daging.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelDaging.add(edt_kode_daging, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 220, -1));
+
+        edt_bagian_daging.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelDaging.add(edt_bagian_daging, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, 220, -1));
+
+        edt_harga_daging.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelDaging.add(edt_harga_daging, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 550, 220, -1));
+
+        edt_grade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelDaging.add(edt_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 220, -1));
+
+        edt_stock_daging.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormTabelDaging.add(edt_stock_daging, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 510, 220, -1));
+
+        jButton16.setText("Tambah");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        FormTabelDaging.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 590, 80, -1));
+
+        jButton17.setText("Ubah");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
+        FormTabelDaging.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 80, -1));
+
+        jButton18.setText("Kembali");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+        FormTabelDaging.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 640, 130, -1));
+
+        jButton19.setText("Hapus");
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton19ActionPerformed(evt);
+            }
+        });
+        FormTabelDaging.add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 590, 80, -1));
+
+        jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Untitled design (30).png"))); // NOI18N
+        FormTabelDaging.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.add(FormTabelDaging, "card8");
+
+        FormPelanggan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Username");
+        FormPelanggan.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, -1, -1));
+
+        edt_username.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormPelanggan.add(edt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 210, -1));
+
+        jLabel11.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Bagian Daging");
+        FormPelanggan.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Grade Daging");
+        FormPelanggan.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Harga");
+        FormPelanggan.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, -1));
+
+        cbb_bagian.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbb_bagian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih", "Sirloin", "Tenderloin", "Rib Eye", "Tomahawk" }));
+        cbb_bagian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_bagianActionPerformed(evt);
+            }
+        });
+        FormPelanggan.add(cbb_bagian, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 210, -1));
+
+        cbb_kematangan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbb_kematangan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih", "Rare", "Medium Rare", "Medium", "Medium Well", "Well Done" }));
+        FormPelanggan.add(cbb_kematangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 210, -1));
+
+        jLabel14.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Tingkat Kematangan");
+        FormPelanggan.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, -1, -1));
+
+        edt_harga.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormPelanggan.add(edt_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 510, 210, -1));
+
+        jLabel16.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Qty");
+        FormPelanggan.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 400, 40, -1));
+
+        edt_qty.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormPelanggan.add(edt_qty, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, 50, -1));
+
+        btn_cekharga.setText("Cek Harga");
+        btn_cekharga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cekhargaActionPerformed(evt);
+            }
+        });
+        FormPelanggan.add(btn_cekharga, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 510, -1, -1));
+
+        jButton5.setText("Beli");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        FormPelanggan.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 590, 100, -1));
+
+        jButton6.setText("Kembali");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        FormPelanggan.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 590, 100, -1));
+
+        img_tomahawk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/tomahawk.png"))); // NOI18N
+        FormPelanggan.add(img_tomahawk, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 240, 130));
+
+        img_tenderloin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/tenderloin.png"))); // NOI18N
+        FormPelanggan.add(img_tenderloin, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 230, 140));
+
+        img_sirloin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/sirloin.png"))); // NOI18N
+        FormPelanggan.add(img_sirloin, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 240, 180));
+
+        img_ribeye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/ribeye.png"))); // NOI18N
+        FormPelanggan.add(img_ribeye, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 230, 160));
+
+        cbb_grade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbb_grade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih", "A1", "A2", "A3", "A4", "A5" }));
+        cbb_grade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_gradeActionPerformed(evt);
+            }
+        });
+        FormPelanggan.add(cbb_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 210, -1));
+
+        edt_kode_pelanggan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FormPelanggan.add(edt_kode_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 60, -1));
+
+        jLabel17.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Rp");
+        FormPelanggan.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 510, -1, -1));
+        FormPelanggan.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 260, 170));
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Untitled design (30).png"))); // NOI18N
+        FormPelanggan.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, -1));
+
+        jPanel1.add(FormPelanggan, "card4");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        try {
+            sql = "select * from userpass where username = '" + edt_user_login.getText() + "' and password = '" + edt_pass_login.getText() + "'";
+            rs = stat.executeQuery(sql);
+            String admin = "admin";
+            String pelanggan = "pelanggan";
+
+            if (rs.next()) {
+                if (edt_user_login.getText().equals(rs.getString("username")) && edt_pass_login.getText().
+                        equals(rs.getString("password")) && pelanggan.equals(rs.getString("role"))) {
+                    JOptionPane.showMessageDialog(null, "berhasil login");
+                    edt_username.setText(edt_user_login.getText());
+                    cl.show(jPanel1, "card4");
+                } else if (edt_user_login.getText().equals(rs.getString("username")) && edt_pass_login.getText().
+                        equals(rs.getString("password")) && admin.equals(rs.getString("role"))) {
+                    JOptionPane.showMessageDialog(null, "berhasil login");
+                    cl.show(jPanel1, "card5");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username Atau Password Salah");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+//        String cbb_bagian.getSelectedItem().toString();
+        trans.saveTrans(edt_username.getText(), edt_kode_pelanggan.getText(), (String) cbb_kematangan.getSelectedItem(),
+                 Integer.toString(price), edt_qty.getText(), edt_harga.getText());
+        JOptionPane.showMessageDialog(rootPane, "Berhasil Membeli");
+        clear();
+        cbb_bagian.setSelectedItem("Pilih");
+        cbb_grade.setSelectedItem("Pilih");
+        cbb_kematangan.setSelectedItem("Pilih");
+        tampilDaging();
+        tampilTrans();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        clear();
+        cl.show(jPanel1, "card2");
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        if (rb_admin.isSelected()){
+            String role = "admin";
+            login.saveUser(edt_user_regis.getText(), edt_pass_regis.getText(), role);
+            tampilUser();
+            cl.show(jPanel1, "card2");
+
+        } else if (rb_pelanggan.isSelected()){
+            String role = "pelanggan";
+            login.saveUser(edt_user_regis.getText(), edt_pass_regis.getText(), role);
+            tampilUser();
+            cl.show(jPanel1, "card2");
+        clear();
+
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        edt_user_login.setText(null);
+        edt_pass_login.setText(null);
+        cl.show(jPanel1, "card3");
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.exit(0); // keluar
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            edt_pass_login.setEchoChar((char) 0);
+        } else {
+            edt_pass_login.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void cbb_bagianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_bagianActionPerformed
+
+        if (cbb_bagian.getSelectedItem() == "Sirloin") {
+            ImageIcon icon = new ImageIcon("M:\\Tugas\\KULI Ah\\Sem 4\\PBO\\Kuliah\\TubesPBO\\build\\classes\\image\\sirloin.png");
+            Image img = icon.getImage();
+            Image imgscal = img.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon sir = new ImageIcon(imgscal);
+            image.setIcon(sir);
+            cbb_grade.setSelectedItem("Pilih");
+            cbb_kematangan.setSelectedItem("Pilih");
+        } else if (cbb_bagian.getSelectedItem() == "Tenderloin") {
+            ImageIcon icon = new ImageIcon("M:\\Tugas\\KULI Ah\\Sem 4\\PBO\\Kuliah\\TubesPBO\\build\\classes\\image\\tenderloin.png");
+            Image img = icon.getImage();
+            Image imgscal = img.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon ten = new ImageIcon(imgscal);
+            image.setIcon(ten);
+            cbb_grade.setSelectedItem("Pilih");
+            cbb_kematangan.setSelectedItem("Pilih");
+        } else if (cbb_bagian.getSelectedItem() == "Rib Eye") {
+            ImageIcon icon = new ImageIcon("M:\\Tugas\\KULI Ah\\Sem 4\\PBO\\Kuliah\\TubesPBO\\build\\classes\\image\\ribeye.png");
+            Image img = icon.getImage();
+            Image imgscal = img.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon rib = new ImageIcon(imgscal);
+            image.setIcon(rib);
+            cbb_grade.setSelectedItem("Pilih");
+            cbb_kematangan.setSelectedItem("Pilih");
+        } else if (cbb_bagian.getSelectedItem() == "Tomahawk") {
+            ImageIcon icon = new ImageIcon("M:\\Tugas\\KULI Ah\\Sem 4\\PBO\\Kuliah\\TubesPBO\\build\\classes\\image\\tomahawk.png");
+            Image img = icon.getImage();
+            Image imgscal = img.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon sir = new ImageIcon(imgscal);
+            image.setIcon(sir);
+            cbb_grade.setSelectedItem("Pilih");
+            cbb_kematangan.setSelectedItem("Pilih");
+        }
+    }//GEN-LAST:event_cbb_bagianActionPerformed
+
+    private void cbb_gradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_gradeActionPerformed
+        edt_harga.setText("");
+        edt_qty.setText("1");
+        cbb_kematangan.setSelectedItem("Pilih");
+    }//GEN-LAST:event_cbb_gradeActionPerformed
+
+    private void btn_cekhargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cekhargaActionPerformed
+        int jumlah = Integer.parseInt(edt_qty.getText());
+        if (cbb_bagian.getSelectedItem() == "Sirloin") {
+            if (cbb_grade.getSelectedItem() == "A1") {
+                harga = 100000 * jumlah;
+                price = 100000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("SIRA1");
+            } else if (cbb_grade.getSelectedItem() == "A2") {
+                harga = 350000 * jumlah;
+                price = 350000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("SIRA2");
+            } else if (cbb_grade.getSelectedItem() == "A3") {
+                harga = 800000 * jumlah;
+                price = 800000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("SIRA3");
+            } else if (cbb_grade.getSelectedItem() == "A4") {
+                harga = 1000000 * jumlah;
+                price = 1000000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("SIRA4");
+            } else if (cbb_grade.getSelectedItem() == "A5") {
+                harga = 1800000 * jumlah;
+                price = 1800000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("SIRA5");
+            }
+        }
+
+        if (cbb_bagian.getSelectedItem() == "Tenderloin") {
+            if (cbb_grade.getSelectedItem() == "A1") {
+                harga = 150000 * jumlah;
+                price = 150000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TENA1");
+            } else if (cbb_grade.getSelectedItem() == "A2") {
+                harga = 450000 * jumlah;
+                price = 450000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TENA2");
+            } else if (cbb_grade.getSelectedItem() == "A3") {
+                harga = 900000 * jumlah;
+                price = 900000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TENA3");
+            } else if (cbb_grade.getSelectedItem() == "A4") {
+                harga = 1500000 * jumlah;
+                price = 1500000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TENA4");
+            } else if (cbb_grade.getSelectedItem() == "A5") {
+                harga = 2000000 * jumlah;
+                price = 2000000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TENA5");
+            }
+        }
+
+        if (cbb_bagian.getSelectedItem() == "Rib Eye") {
+            if (cbb_grade.getSelectedItem() == "A1") {
+                harga = 180000 * jumlah;
+                price = 180000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("RIBA1");
+            } else if (cbb_grade.getSelectedItem() == "A2") {
+                harga = 500000 * jumlah;
+                price = 500000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("RIBA2");
+            } else if (cbb_grade.getSelectedItem() == "A3") {
+                harga = 1100000 * jumlah;
+                price = 1100000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("RIBA3");
+            } else if (cbb_grade.getSelectedItem() == "A4") {
+                harga = 1800000 * jumlah;
+                price = 1800000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("RIBA4");
+            } else if (cbb_grade.getSelectedItem() == "A5") {
+                harga = 2400000 * jumlah;
+                price = 2400000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("RIBA5");
+            }
+        }
+
+        if (cbb_bagian.getSelectedItem() == "Tomahawk") {
+            if (cbb_grade.getSelectedItem() == "A1") {
+                harga = 250000 * jumlah;
+                price = 250000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TOMA1");
+            } else if (cbb_grade.getSelectedItem() == "A2") {
+                harga = 750000 * jumlah;
+                price = 750000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TOMA2");
+            } else if (cbb_grade.getSelectedItem() == "A3") {
+                harga = 1500000 * jumlah;
+                price = 1500000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TOMA3");
+            } else if (cbb_grade.getSelectedItem() == "A4") {
+                harga = 2400000 * jumlah;
+                price = 2400000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TOMA4");
+            } else if (cbb_grade.getSelectedItem() == "A5") {
+                harga = 3000000 * jumlah;
+                price = 3000000;
+                edt_harga.setText(Integer.toString(harga));
+                edt_kode_pelanggan.setText("TOMA5");
+            }
+        }
+    }//GEN-LAST:event_btn_cekhargaActionPerformed
+
+    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+        cl.show(jPanel1, "card6");
+    }//GEN-LAST:event_jLabel20MouseClicked
+
+    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+        cl.show(jPanel1, "card8");
+    }//GEN-LAST:event_jLabel24MouseClicked
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        clear();
+        cl.show(jPanel1, "card2");
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
+        cl.show(jPanel1, "card7");
+    }//GEN-LAST:event_jLabel22MouseClicked
+
+    private void tabel_transMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_transMouseClicked
+        int baris = tabel_trans.rowAtPoint(evt.getPoint());
+
+        String id = tabel_trans.getValueAt(baris, 0).toString();
+        edt_id.setText(id);
+        String user = tabel_trans.getValueAt(baris, 1).toString();
+        edt_user_trans.setText(user);
+        String kode = tabel_trans.getValueAt(baris, 2).toString();
+        edt_kode.setText(kode);
+        String matang = tabel_trans.getValueAt(baris, 3).toString();
+        edt_matang.setText(matang);
+        String harga = tabel_trans.getValueAt(baris, 4).toString();
+        edt_harga_trans.setText(harga);
+        String jumlah = tabel_trans.getValueAt(baris, 5).toString();
+        edt_jumlah.setText(jumlah);
+        String total = tabel_trans.getValueAt(baris, 6).toString();
+        edt_total.setText(total);
+    }//GEN-LAST:event_tabel_transMouseClicked
+
+    private void tabel_dagingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_dagingMouseClicked
+        int baris = tabel_daging.rowAtPoint(evt.getPoint());
+
+        String kode = tabel_daging.getValueAt(baris, 0).toString();
+        edt_kode_daging.setText(kode);
+        String bagian = tabel_daging.getValueAt(baris, 1).toString();
+        edt_bagian_daging.setText(bagian);
+        String grade = tabel_daging.getValueAt(baris, 2).toString();
+        edt_grade.setText(grade);
+        String stock = tabel_daging.getValueAt(baris, 3).toString();
+        edt_stock_daging.setText(stock);
+        String harga = tabel_daging.getValueAt(baris, 4).toString();
+        edt_harga_daging.setText(harga);
+    }//GEN-LAST:event_tabel_dagingMouseClicked
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+
+        daging.saveDaging(edt_kode_daging.getText(), edt_bagian_daging.getText(), edt_grade.getText(),
+                edt_stock_daging.getText(), edt_harga_daging.getText());
+        tampilDaging();
+        clear();
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        daging.updateDaging(edt_kode_daging.getText(), edt_bagian_daging.getText(), edt_grade.getText(),
+                edt_stock_daging.getText(), edt_harga_daging.getText());
+        tampilDaging();
+        clear();
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        daging.deleteDaging(edt_kode_daging.getText());
+        tampilDaging();
+        clear();
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        cl.show(jPanel1, "card5");
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        cl.show(jPanel1, "card5");
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        cl.show(jPanel1, "card5");
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        trans.saveTrans(edt_user_trans.getText(), edt_kode.getText(), edt_matang.getText(),
+                 edt_harga_trans.getText(), edt_jumlah.getText(), edt_total.getText());
+        tampilTrans();
+        clear();
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        trans.updateTrans(edt_id.getText(), edt_user_trans.getText(), edt_kode.getText(), edt_matang.getText(),
+                 edt_harga_trans.getText(), edt_jumlah.getText(), edt_total.getText());
+        tampilTrans();
+        clear();
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        trans.deleteTrans(edt_id.getText());
+        tampilTrans();
+        clear();
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void edt_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edt_totalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edt_totalActionPerformed
+
+    private void edt_jumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edt_jumlahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edt_jumlahActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       clear();
+       cl.show(jPanel1, "card2");
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tabel_userMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_userMouseClicked
+        int baris = tabel_user.rowAtPoint(evt.getPoint());
+
+        String noakun = tabel_user.getValueAt(baris, 0).toString();
+        edt_noakun.setText(noakun);
+        String user = tabel_user.getValueAt(baris, 1).toString();
+        edt_user.setText(user);
+        String pass = tabel_user.getValueAt(baris, 2).toString();
+        edt_pass.setText(pass);
+        String role = tabel_user.getValueAt(baris, 3).toString();
+        edt_role.setText(role);
+    }//GEN-LAST:event_tabel_userMouseClicked
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        login.saveUser(edt_user.getText(), edt_pass.getText(), edt_role.getText());
+        tampilUser();
+        clear();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        login.updateUser(edt_noakun.getText(),edt_user.getText(), edt_pass.getText(), edt_role.getText());
+        tampilUser();
+        clear();
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        login.deleteUser(edt_noakun.getText());
+        tampilUser();
+        clear();
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        /* Create and display the form */
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Form().setVisible(true);
+            }
+        }
+        );
+    }
+    private CardLayout cl;
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel FormAdmin;
+    private javax.swing.JPanel FormAwal;
+    private javax.swing.JPanel FormPelanggan;
+    private javax.swing.JPanel FormRegister;
+    private javax.swing.JPanel FormTabelDaging;
+    private javax.swing.JPanel FormTabelTransaksi;
+    private javax.swing.JPanel FormTabelUser;
+    private javax.swing.JButton btn_cekharga;
+    private javax.swing.JComboBox<String> cbb_bagian;
+    private javax.swing.JComboBox<String> cbb_grade;
+    private javax.swing.JComboBox<String> cbb_kematangan;
+    private javax.swing.JTextField edt_bagian_daging;
+    private javax.swing.JTextField edt_grade;
+    private javax.swing.JTextField edt_harga;
+    private javax.swing.JTextField edt_harga_daging;
+    private javax.swing.JTextField edt_harga_trans;
+    private javax.swing.JTextField edt_id;
+    private javax.swing.JTextField edt_jumlah;
+    private javax.swing.JTextField edt_kode;
+    private javax.swing.JTextField edt_kode_daging;
+    private javax.swing.JTextField edt_kode_pelanggan;
+    private javax.swing.JTextField edt_matang;
+    private javax.swing.JTextField edt_noakun;
+    private javax.swing.JTextField edt_pass;
+    private javax.swing.JPasswordField edt_pass_login;
+    private javax.swing.JTextField edt_pass_regis;
+    private javax.swing.JTextField edt_qty;
+    private javax.swing.JTextField edt_role;
+    private javax.swing.JTextField edt_stock_daging;
+    private javax.swing.JTextField edt_total;
+    private javax.swing.JTextField edt_user;
+    private javax.swing.JTextField edt_user_login;
+    private javax.swing.JTextField edt_user_regis;
+    private javax.swing.JTextField edt_user_trans;
+    private javax.swing.JTextField edt_username;
+    private javax.swing.JLabel image;
+    private javax.swing.JLabel img_ribeye;
+    private javax.swing.JLabel img_sirloin;
+    private javax.swing.JLabel img_tenderloin;
+    private javax.swing.JLabel img_tomahawk;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JRadioButton rb_admin;
+    private javax.swing.JRadioButton rb_pelanggan;
+    private javax.swing.JTable tabel_daging;
+    private javax.swing.JTable tabel_trans;
+    private javax.swing.JTable tabel_user;
+    // End of variables declaration//GEN-END:variables
+}
